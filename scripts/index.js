@@ -63,7 +63,7 @@ function createCard(link, name) {
         newCard.remove();
     });
     cardImage.addEventListener("click", function() {
-        switchPopup(popupImage);
+        switchPopupImage();
         popupPicture.src = link;
         popupPicture.alt = name;
         popupImage.querySelector(".popup__image-title").textContent = name;
