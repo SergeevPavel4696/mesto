@@ -29,12 +29,12 @@ const popupPicture = popupImage.querySelector(".popup__image");
 
 const formImageClose = popupImage.querySelector(".popup__close");
 
-function openPopup() {
-    popupProfile.classList.toggle("popup_opened");
+function switchPopup(popup) {
+    popup.classList.toggle("popup_opened");
 }
 
-function addPopupOpened() {
-    openPopup();
+function switchPopupProfile() {
+    switchPopup(popupProfile);
     formFieldName.value = infoName.textContent;
     formFieldAboutMyself.value = infoAboutMyself.textContent;
 }
@@ -43,11 +43,11 @@ function setInfo(evt) {
     evt.preventDefault();
     infoName.textContent = formFieldName.value;
     infoAboutMyself.textContent = formFieldAboutMyself.value;
-    openPopup();
+    switchPopup(popupProfile);
 }
 
-function openPopupCards() {
-    popupAdd.classList.toggle("popup_opened");
+function switchPopupCards() {
+    switchPopup(popupAdd);
 }
 
 function createCard(link, name) {
@@ -63,7 +63,7 @@ function createCard(link, name) {
         newCard.remove();
     });
     cardImage.addEventListener("click", function() {
-        popupImage.classList.add("popup_opened");
+        switchPopup(popupImage);
         popupPicture.src = link;
         popupPicture.alt = name;
         popupImage.querySelector(".popup__image-title").textContent = name;
@@ -76,25 +76,24 @@ function createNewCard(evt) {
     cardGrid.prepend(createCard(cardLink.value, cardName.value));
     cardLink.value = "";
     cardName.value = "";
-    openPopupCards();
+    switchPopupCards();
 }
 
-function removePopupImageOpened() {
-    popupImage.classList.remove("popup_opened");
+function switchPopupImage() {
+    switchPopup(popupImage);
 }
-
 
 
 initialCards.forEach(function (element) {
     cardGrid.prepend(createCard(element.link, element.name));
 })
 
-infoButton.addEventListener("click", addPopupOpened);
-formClose.addEventListener("click", openPopup);
+infoButton.addEventListener("click", switchPopupProfile);
+formClose.addEventListener("click", switchPopupProfile);
 formSave.addEventListener("submit", setInfo, false);
 
-profileAdd.addEventListener("click", openPopupCards);
-formAddClose.addEventListener("click", openPopupCards);
+profileAdd.addEventListener("click", switchPopupCards);
+formAddClose.addEventListener("click", switchPopupCards);
 formAddSave.addEventListener("submit", createNewCard, false);
 
-formImageClose.addEventListener("click", removePopupImageOpened);
+formImageClose.addEventListener("click", switchPopupImage);
