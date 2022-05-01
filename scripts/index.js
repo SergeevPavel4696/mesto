@@ -1,3 +1,5 @@
+const popups = document.querySelectorAll('.popup');
+
 const popupProfile = document.querySelector(".popup");
 
 const card = document.querySelector("#card").content.querySelector(".card");
@@ -29,8 +31,17 @@ const popupPicture = popupImage.querySelector(".popup__image");
 
 const formImageClose = popupImage.querySelector(".popup__close");
 
+function closeByEscape(evt) {
+    if (evt.key === 'Escape') {
+        const popup = document.querySelector('.popup_opened');
+        switchPopup(popup);
+    }
+}
+
 function switchPopup(popup) {
+    resetErrors(popup, validationData);
     popup.classList.toggle("popup_opened");
+    document.addEventListener('keydown', closeByEscape);
 }
 
 function switchPopupProfile() {
@@ -47,6 +58,8 @@ function setInfo(evt) {
 }
 
 function switchPopupCards() {
+    cardName.value = "";
+    cardLink.value = "";
     switchPopup(popupAdd);
 }
 
@@ -56,13 +69,13 @@ function createCard(link, name) {
     cardImage.src = link;
     cardImage.alt = name;
     newCard.querySelector(".card__title").textContent = name;
-    newCard.querySelector(".card__like").addEventListener("click", function(event) {
+    newCard.querySelector(".card__like").addEventListener("click", function (event) {
         event.target.classList.toggle("card__like_active");
     });
-    newCard.querySelector(".card__trash").addEventListener("click", function() {
+    newCard.querySelector(".card__trash").addEventListener("click", function () {
         newCard.remove();
     });
-    cardImage.addEventListener("click", function() {
+    cardImage.addEventListener("click", function () {
         switchPopupImage();
         popupPicture.src = link;
         popupPicture.alt = name;
@@ -83,10 +96,21 @@ function switchPopupImage() {
     switchPopup(popupImage);
 }
 
+function closeByOverlay(evt, popup) {
+    if (evt.target === evt.currentTarget) {
+        switchPopup(popup);
+    }
+}
+
+popups.forEach(function (popup) {
+    popup.addEventListener('mousedown', function (evt) {
+        closeByOverlay(evt, popup);
+    });
+});
 
 initialCards.forEach(function (element) {
     cardGrid.prepend(createCard(element.link, element.name));
-})
+});
 
 infoButton.addEventListener("click", switchPopupProfile);
 formClose.addEventListener("click", switchPopupProfile);
@@ -97,3 +121,4 @@ formAddClose.addEventListener("click", switchPopupCards);
 formAddSave.addEventListener("submit", createNewCard, false);
 
 formImageClose.addEventListener("click", switchPopupImage);
+

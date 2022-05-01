@@ -13,24 +13,6 @@
     box-sizing: border-box;
 }
 
-.form__field:first-of-type {
-    margin: 50px 0 15px;
-}
-
-.form__field:last-of-type {
-    margin: 15px 0 44px;
-}
-
 .form__field:focus {
     outline: none;
-}
-
-@media screen and (max-width: 478px){
-    .form__field:first-of-type {
-        margin-top: 71px;
-    }
-
-    .form__field:last-of-type {
-        margin-bottom: 41px;
-    }
 }
