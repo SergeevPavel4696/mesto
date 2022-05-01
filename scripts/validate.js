@@ -63,13 +63,11 @@ const enableValidation = (validation) => {
 
 const resetErrors = (popup, validation) => {
     const inputArray = Array.from(popup.querySelectorAll(validation.inputSelector));
-    if (inputArray.length !== 0) {
-        const button = popup.querySelector(validation.submitButtonSelector);
-        inputArray.forEach((input) => {
-            deleteError(validation, input);
-        });
-        switchButton(inputArray, button, validation);
-    }
+    const button = popup.querySelector(validation.submitButtonSelector);
+    inputArray.forEach((input) => {
+        deleteError(validation, input);
+    });
+    switchButton(inputArray, button, validation);
 }
 
 enableValidation(validationData);
