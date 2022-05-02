@@ -4,6 +4,10 @@
     justify-items: start;
 }
 
+.popup_image::before {
+    opacity: 0.9;
+}
+
 @media screen and (max-width: 567px) {
     .popup_image{
         align-items: start;
