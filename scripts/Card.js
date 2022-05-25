@@ -2,19 +2,19 @@ import {openPopupImage, popupImage, popupPicture} from "./index.js";
 
 export class Card {
     constructor(link, name, template) {
-        this.name = name;
-        this.link = link;
+        this._name = name;
+        this._link = link;
         this.card = document.querySelector("#" + template).content.querySelector("." + template).cloneNode(true);
-        this.cardImage = this.card.querySelector(".card__image");
+        this._cardImage = this.card.querySelector(".card__image");
     }
 
     _setImage() {
-        this.cardImage.src = this.link;
-        this.cardImage.alt = this.name;
+        this._cardImage.src = this._link;
+        this._cardImage.alt = this._name;
     }
 
     _setCardTittle() {
-        this.card.querySelector(".card__title").textContent = this.name;
+        this.card.querySelector(".card__title").textContent = this._name;
     }
 
     _setCardLikeEvent() {
@@ -24,13 +24,14 @@ export class Card {
     }
 
     _setCardTrashEvent(card) {
-        card.querySelector(".card__trash").addEventListener("click", function () {
+        this.card.querySelector(".card__trash").addEventListener("click", function () {
             card.remove();
+            card = null;
         });
     }
 
     _setCardImageEvent(link, name) {
-        this.cardImage.addEventListener("click", function () {
+        this._cardImage.addEventListener("click", function () {
             popupPicture.src = link;
             popupPicture.alt = name;
             popupImage.querySelector(".popup__image-title").textContent = name;
@@ -43,7 +44,7 @@ export class Card {
         this._setCardTittle();
         this._setCardLikeEvent();
         this._setCardTrashEvent(this.card);
-        this._setCardImageEvent(this.link, this.name);
+        this._setCardImageEvent(this._link, this._name);
         return this.card;
     }
 }

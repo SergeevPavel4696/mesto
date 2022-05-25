@@ -12,14 +12,14 @@ const validationData = {
 
 const popups = document.querySelectorAll('.popup');
 
-const popupProfile = document.querySelector(".popup");
+const popupProfile = document.querySelector(".popup_profile");
 const formProfile = popupProfile.querySelector(".form");
 const profileFormValidator = new FormValidator(validationData, formProfile);
 profileFormValidator.enableValidation();
 
 const infoButton = document.querySelector(".profile__info-button");
-const formClose = popupProfile.querySelector(".popup__close");
-const formSave = popupProfile.querySelector(".form");
+const popupProfileClose = popupProfile.querySelector(".popup__close");
+const formProfileSave = popupProfile.querySelector(".form");
 
 const infoName = document.querySelector(".profile__info-name");
 const infoAboutMyself = document.querySelector(".profile__info-about-myself");
@@ -33,7 +33,7 @@ const addFormValidator = new FormValidator(validationData, formAdd);
 addFormValidator.enableValidation();
 
 const profileAdd = document.querySelector(".profile__add");
-const formAddClose = popupAdd.querySelector(".popup__close");
+const popupAddClose = popupAdd.querySelector(".popup__close");
 const formAddSave = popupAdd.querySelector(".form");
 const cardGrid = document.querySelector(".cards");
 
@@ -67,7 +67,6 @@ function closePopup(popup) {
 function openPopupProfile() {
     formFieldName.value = infoName.textContent;
     formFieldAboutMyself.value = infoAboutMyself.textContent;
-    profileFormValidator._switchButton();
     openPopup(popupProfile);
     profileFormValidator.resetErrors();
 }
@@ -86,7 +85,6 @@ function setInfo(evt) {
 function openPopupCards() {
     cardName.value = "";
     cardLink.value = "";
-    addFormValidator._switchButton();
     openPopup(popupAdd);
     addFormValidator.resetErrors();
 }
@@ -133,11 +131,11 @@ initialCards.forEach(function (element) {
 });
 
 infoButton.addEventListener("click", openPopupProfile);
-formClose.addEventListener("click", closePopupProfile);
-formSave.addEventListener("submit", setInfo, false);
+popupProfileClose.addEventListener("click", closePopupProfile);
+formProfileSave.addEventListener("submit", setInfo, false);
 
 profileAdd.addEventListener("click", openPopupCards);
-formAddClose.addEventListener("click", closePopupCards);
+popupAddClose.addEventListener("click", closePopupCards);
 formAddSave.addEventListener("submit", createNewCard, false);
 
 formImageClose.addEventListener("click", closePopupImage);

@@ -59,5 +59,6 @@ export class FormValidator {
         this._inputArray.forEach((input) => {
             this._deleteError(input);
         });
+        this._switchButton();
     }
 }
