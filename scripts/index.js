@@ -1,8 +1,21 @@
+import {Card} from "./Card.js";
+import {FormValidator} from "./FormValidator.js";
+
+const validationData = {
+    formSelector: '.form',
+    inputSelector: '.form__field',
+    submitButtonSelector: '.form__save',
+    inactiveButtonClass: 'form__save_nonactive',
+    inputErrorClass: 'form__field_error',
+    errorClass: 'form__field-error_active'
+};
+
 const popups = document.querySelectorAll('.popup');
 
 const popupProfile = document.querySelector(".popup");
-
-const card = document.querySelector("#card").content.querySelector(".card");
+const formProfile = popupProfile.querySelector(".form");
+const profileFormValidator = new FormValidator(validationData, formProfile);
+profileFormValidator.enableValidation();
 
 const infoButton = document.querySelector(".profile__info-button");
 const formClose = popupProfile.querySelector(".popup__close");
@@ -15,6 +28,9 @@ const formFieldAboutMyself = document.querySelector(".form__field_input_about-my
 
 
 const popupAdd = document.querySelector(".popup_add");
+const formAdd = popupAdd.querySelector(".form");
+const addFormValidator = new FormValidator(validationData, formAdd);
+addFormValidator.enableValidation();
 
 const profileAdd = document.querySelector(".profile__add");
 const formAddClose = popupAdd.querySelector(".popup__close");
@@ -25,9 +41,9 @@ const cardName = popupAdd.querySelector(".form__field_input_card-name");
 const cardLink = popupAdd.querySelector(".form__field_input_link");
 
 
-const popupImage = document.querySelector(".popup_image");
+export const popupImage = document.querySelector(".popup_image");
 
-const popupPicture = popupImage.querySelector(".popup__image");
+export const popupPicture = popupImage.querySelector(".popup__image");
 
 const formImageClose = popupImage.querySelector(".popup__close");
 
@@ -51,12 +67,12 @@ function closePopup(popup) {
 function openPopupProfile() {
     formFieldName.value = infoName.textContent;
     formFieldAboutMyself.value = infoAboutMyself.textContent;
+    profileFormValidator._switchButton();
     openPopup(popupProfile);
-    resetErrors(popupProfile, validationData);
+    profileFormValidator.resetErrors();
 }
 
 function closePopupProfile() {
-    resetErrors(popupProfile, validationData);
     closePopup(popupProfile);
 }
 
@@ -70,8 +86,9 @@ function setInfo(evt) {
 function openPopupCards() {
     cardName.value = "";
     cardLink.value = "";
-    resetErrors(popupAdd, validationData);
+    addFormValidator._switchButton();
     openPopup(popupAdd);
+    addFormValidator.resetErrors();
 }
 
 function closePopupCards() {
@@ -79,24 +96,8 @@ function closePopupCards() {
 }
 
 function createCard(link, name) {
-    const newCard = card.cloneNode(true);
-    const cardImage = newCard.querySelector(".card__image");
-    cardImage.src = link;
-    cardImage.alt = name;
-    newCard.querySelector(".card__title").textContent = name;
-    newCard.querySelector(".card__like").addEventListener("click", function (event) {
-        event.target.classList.toggle("card__like_active");
-    });
-    newCard.querySelector(".card__trash").addEventListener("click", function () {
-        newCard.remove();
-    });
-    cardImage.addEventListener("click", function () {
-        popupPicture.src = link;
-        popupPicture.alt = name;
-        popupImage.querySelector(".popup__image-title").textContent = name;
-        openPopupImage();
-    });
-    return newCard;
+    const card = new Card(link, name, "card");
+    return card.getNewCard();
 }
 
 function createNewCard(evt) {
@@ -107,7 +108,7 @@ function createNewCard(evt) {
     closePopupCards();
 }
 
-function openPopupImage() {
+export function openPopupImage() {
     openPopup(popupImage);
 }
 
