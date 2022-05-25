@@ -49,10 +49,10 @@ function closePopup(popup) {
 }
 
 function openPopupProfile() {
-    resetErrors(popupProfile, validationData);
-    openPopup(popupProfile);
     formFieldName.value = infoName.textContent;
     formFieldAboutMyself.value = infoAboutMyself.textContent;
+    openPopup(popupProfile);
+    resetErrors(popupProfile, validationData);
 }
 
 function closePopupProfile() {
