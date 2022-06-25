@@ -1,9 +1,9 @@
 export class Card {
-    constructor(cardInfo, template, popup) {
+    constructor(cardInfo, template, popupHandler) {
         this._name = cardInfo["card-name"];
         this._link = cardInfo["card-link"];
         this.card = document.querySelector("#" + template).content.querySelector("." + template).cloneNode(true);
-        this._popup = popup;
+        this._popupHandler = popupHandler;
         this._cardImage = this.card.querySelector(".card__image");
     }
 
@@ -29,9 +29,9 @@ export class Card {
         });
     }
 
-    _setCardImageEvent(popup, link, name) {
-        this._cardImage.addEventListener("click", function () {
-            popup.open(link, name);
+    _setCardImageEvent(link, name) {
+        this._cardImage.addEventListener("click", () => {
+            this._popupHandler(link, name);
         });
     }
 
@@ -40,7 +40,7 @@ export class Card {
         this._setCardTittle();
         this._setCardLikeEvent();
         this._setCardTrashEvent(this.card);
-        this._setCardImageEvent(this._popup, this._link, this._name);
+        this._setCardImageEvent(this._link, this._name);
         return this.card;
     }
 }

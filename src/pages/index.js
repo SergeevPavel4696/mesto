@@ -10,7 +10,7 @@ const popupWithImage = new PopupWithImage(".popup_image");
 popupWithImage.setEventListeners();
 const popupProfile = new PopupWithForm(".popup_profile", setInfo, ".profile__info-button");
 popupProfile.setEventListeners();
-const popupCard = new PopupWithForm(".popup_add", createNewCard, ".profile__add");
+const popupCard = new PopupWithForm(".popup_add", createCard, ".profile__add");
 popupCard.setEventListeners();
 
 const nameSelector = ".profile__info-name";
@@ -21,14 +21,12 @@ function setInfo(formValues) {
     userInfo.setUserInfo(formValues)
 }
 
-function createCard(popup, cardGrid, cardInfo) {
-    cardGrid.prepend(new Card(cardInfo, "card", popup).getNewCard());
-}
+const section = new Section({items: initialCards, renderer: createCard}, ".cards");
 
-const section = new Section({items: initialCards, renderer: createCard}, ".cards", popupWithImage);
-
-function createNewCard(formValues) {
-    section.addItem(new Card(formValues, "card", section.getPopup()).getNewCard());
+function createCard(formValues) {
+    section.addItem(new Card(formValues, "card", (link, name) => {
+        popupWithImage.open(link, name);
+    }).getNewCard());
 }
 
 section.renderItems();

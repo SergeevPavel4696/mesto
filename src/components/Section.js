@@ -1,13 +1,8 @@
 export class Section {
-    constructor({items, renderer}, containerSelector, popup) {
+    constructor({items, renderer}, containerSelector) {
         this._renderer = renderer;
         this._items = items;
         this._cardGrid = document.querySelector(containerSelector);
-        this._popup = popup;
-    }
-
-    getPopup() {
-        return this._popup;
     }
 
     addItem(card) {
@@ -16,7 +11,7 @@ export class Section {
 
     renderItems() {
         this._items.forEach((item) => {
-            this._renderer(this._popup, this._cardGrid, item);
+            this._renderer(item);
         });
     }
 }
