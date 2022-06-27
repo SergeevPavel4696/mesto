@@ -10,7 +10,9 @@ const popupWithImage = new PopupWithImage(".popup_image");
 popupWithImage.setEventListeners();
 const popupProfile = new PopupWithForm(".popup_profile", setInfo, ".profile__info-button");
 popupProfile.setEventListeners();
-const popupCard = new PopupWithForm(".popup_add", createCard, ".profile__add");
+const popupCard = new PopupWithForm(".popup_add", (formValues) => {
+    section.addItem(createCard(formValues))
+}, ".profile__add");
 popupCard.setEventListeners();
 
 const nameSelector = ".profile__info-name";
@@ -24,9 +26,9 @@ function setInfo(formValues) {
 const section = new Section({items: initialCards, renderer: createCard}, ".cards");
 
 function createCard(formValues) {
-    section.addItem(new Card(formValues, "card", (link, name) => {
+    return new Card(formValues, "card", (link, name) => {
         popupWithImage.open(link, name);
-    }).getNewCard());
+    }).getNewCard();
 }
 
 section.renderItems();
