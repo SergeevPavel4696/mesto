@@ -67,9 +67,14 @@ export class Card {
     }
 
     _setCardTrashEvent() {
-        this._cardTrash.addEventListener("click", () => {
-            this._popupDeleteOpenHandler(this.id, this.card);
-        });
+        if (this._userId === this.idOwner) {
+            this._cardTrash.addEventListener("click", () => {
+                this._popupDeleteOpenHandler(this.id, this.card);
+            });
+        } else {
+            this._cardTrash.remove();
+            this._cardTrash = null;
+        }
     }
 
     _setCardImageEvent() {
