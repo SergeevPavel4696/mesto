@@ -12,4 +12,4 @@
 
 **Страница**
 
-* [Ссылка на страницу](https://sergeevpavel4696.github.io/mesto/index.html)
+* [Ссылка на страницу](https://github.com/SergeevPavel4696/mesto/blob/main/src/index.html)
